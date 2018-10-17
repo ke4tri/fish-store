@@ -1,5 +1,17 @@
 // Filter fish that are "on sale"
 
+const discount = .12;
+
+const applySale = () => {
+    $(".on-sale").each((i, fish) => {
+        const fullPrice = $(fish).find('.price')
+        // console.log(fullPrice.html());
+        const newPrice = (parseInt(fullPrice.html()) * (1- discount)).toFixed(2);
+        console.log(newPrice)
+        fullPrice.html(newPrice);
+    })
+};
+
 // Add fish to "Basket"
 const writeFishes = (arrayOfFishes) => {
     let domString = '';
@@ -75,6 +87,7 @@ $("#show-sale").click(() => {
     .done((data) => {
       console.log(data);
       writeFishes(data.fishes);
+      applySale();
     })
     .fail((error) => {
       console.error(error);
