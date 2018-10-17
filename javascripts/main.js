@@ -7,12 +7,14 @@ const writeFishes = (arrayOfFishes) => {
       <div class="thumbnail">
                 <img src="${fish.imageSoure}"
         " alt="" width="40%">
-                <div class="caption">
+               
+            <div class="caption">
                     <h3 id="thumbnail-label">Fish 4</h3>
                     <p>$
                         <span class="price">19</span>
                     </p>
                 </div>
+
                 <div class="caption card-footer">
                     <button class="add btn btn-danger">Add To Basket</button>
                 </div>
@@ -21,8 +23,33 @@ const writeFishes = (arrayOfFishes) => {
         ` 
     })
         $("#available").append(domString);
-        $(domString).append("#available");
+        bindEvents();
 }
+
+const bindEvents = () => {
+        // $(domString).append("#available");
+        $(".add").on('click', (e) => {
+            // what is the dive that has the fish
+            const fishToMove = $(e.target).closest('.fish');
+            // move it to the 'snagged' div
+            $("#snagged").append(fishToMove);
+            // button text => Remove from Basket | change class - 'add' + 'remove'
+            $(e.target).text('Remove from Basket').addClass('remove').removeClass('add');
+            
+        });
+        $(".remove").on('click', (e) => {
+            const fishToMove2 = $(e.target).closest('.fish');
+            $("#available").append(fishToMove);
+            $(e.target).text('Add To Basket').addClass('add').removeClass('remove');
+
+        })
+        
+}
+
+// Dynamically listen for events that happen on buttons with a class .add
+// $('body').on('click', 'button.add', () => {
+
+// })
 
 // Load Fish
 $.get('../db/fishes.json')
@@ -34,6 +61,8 @@ $.get('../db/fishes.json')
         console.error(error);
     });    // only simicolon you have should be here
 
+
+    
 
 
         
